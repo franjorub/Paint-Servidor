@@ -6,6 +6,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import javax.swing.JTextArea;
 
+import gui.AreaDibujo;
+
 /**
  * @author Francisco Rubial
  * @version 0.0.1
@@ -14,8 +16,8 @@ import javax.swing.JTextArea;
 public class Servidor implements Runnable {
 	private Thread hilo;
 	private int puerto;
-	private JTextArea componente;
-
+	
+    private AreaDibujo area;
 	/**
 	 * 
 	 * Crea un hilo en el que se van a estar aceptando peticiones
@@ -25,9 +27,9 @@ public class Servidor implements Runnable {
 	 * @param componente:
 	 *            TextArea que se modificara con los mensajes
 	 */
-	public Servidor(int puerto, JTextArea componente) {
+	public Servidor(int puerto, AreaDibujo area) {
 		this.puerto = puerto;
-		this.componente = componente;
+		this.area = area;
 		hilo = new Thread(this);
 		hilo.start();
 	}
@@ -45,8 +47,9 @@ public class Servidor implements Runnable {
 
 				entrada = servidor.accept();
 				inputStream = new DataInputStream(entrada.getInputStream());
-				String mensaje = inputStream.readUTF();
-				componente.append(mensaje + "\n");
+				int x = inputStream.readInt();
+				int y = inputStream.readInt();
+				area.dibujar(x, y);
 				entrada.close();
 			}
 		} catch (IOException e) {

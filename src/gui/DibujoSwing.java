@@ -1,4 +1,4 @@
-package Principal;
+package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -9,13 +9,15 @@ import java.io.Serializable;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import conection.Servidor;
  
 public class DibujoSwing implements Serializable {
  
   JButton limpiarBtn, negroBtn, azulBtn, verdeBtn, rojoBtn, magentaBtn;
   AreaDibujo areaDibujo;
   ActionListener actionListener = new ActionListener() {
- 
+  
   public void actionPerformed(ActionEvent e) {
       if (e.getSource() == limpiarBtn) {
         areaDibujo.clear();
@@ -39,13 +41,13 @@ public class DibujoSwing implements Serializable {
  
   public void show() {
     // creando el frame principal
-    JFrame frame = new JFrame("Practica 1 - Paint");
+    JFrame frame = new JFrame("Servidor");
     Container contenido = frame.getContentPane();
     // establecer layout en el contenido del panel
     contenido.setLayout(new BorderLayout());
     // creando area de dibujo
     areaDibujo = new AreaDibujo();
- 
+    Servidor servidor= new Servidor(5000, areaDibujo);
     // anadiendo al contenido del panel
     contenido.add(areaDibujo, BorderLayout.CENTER);
  
@@ -65,7 +67,7 @@ public class DibujoSwing implements Serializable {
     magentaBtn = new JButton("Magenta");
     magentaBtn.addActionListener(actionListener);
  
-    // añadiendo al panel
+    // aï¿½adiendo al panel
     //controles.add(verdeBtn);
     //controles.add(azulBtn);
     controles.add(negroBtn);
@@ -73,8 +75,8 @@ public class DibujoSwing implements Serializable {
     controles.add(magentaBtn);
     controles.add(limpiarBtn);
  
-    // añadiendo al ocntenido del panel
-    contenido.add(controles, BorderLayout.NORTH);
+    // aï¿½adiendo al ocntenido del panel
+    //contenido.add(controles, BorderLayout.NORTH);
  
     frame.setSize(600, 600);
     // habilitando cierre de ventana
